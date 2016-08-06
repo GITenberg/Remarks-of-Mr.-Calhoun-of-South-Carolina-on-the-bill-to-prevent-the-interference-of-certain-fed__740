@@ -1,0 +1,61 @@
+sudo: required
+dist: trusty
+language: ruby
+
+before_install:
+before_install:
+- gem install asciidoctor -v 1.5.2
+- gem install tilt
+- sudo pip install git+https://github.com/gitenberg-dev/gitberg
+- sudo pip install pillow
+- sudo pip install cssutils
+- sudo pip install docutils
+- sudo pip install roman
+- sudo pip install git+https://github.com/gitenberg-dev/pg-epubmaker
+script:
+- VERSION=`ruby -e "require 'yaml'; meta = YAML.load_file('metadata.yaml'); puts meta['_version'];"`
+- git clone https://github.com/gitenberg-dev/asciidoctor-htmlbook.git
+- sudo pip install -r asciidoctor-htmlbook/gitberg-machine/requirements.txt
+
+- /usr/bin/python -c "from gitenberg import travis; travis.build_epub()"
+- ebook-convert book.epub book.mobi
+- xvfb-run ebook-convert book.epub book.pdf
+branches:
+  only:
+  - master
+notifications:
+  webhooks:
+    urls:
+      - https://unglue.it/api/travisci/webhook
+    on_success: always
+    on_failure: never
+    on_start: never
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: oNgaEsGQxp/WOjz4yWpdHMAxOgFWQzpjDJ0kaI/n+SfFK7p/07iDOKqy1t/5wxrJT4yvbTcks1444fpXiq+91HeBXKdT0R8/PDEsj7PVkwsd3NceDhf/j8g19VRhlZce2bN0saELPsrH5me6ETbo6+OVKYJISzQCh53muYDcfXKwlFlMU6/hLSuOr4pgPxwoumHTylTJKEv5K/7iseDNi6VwUPHXNhBv1laAGiX3CZPstqJmCXaAk1Y1U6A0Wo7yUGt6WLapwbdqdZPCL7MfSNhBND7369Ud2XX4BO49KFcvTkzG8GLXNRM8GY8dMmmhIWPLOVvjE3DNOH8Iu556shCQXYd8Eah+Y1FaonCuVpDqEMEO5AUIrvGpDwjxaAP2xSYLNgHGbr2Hpy3EzZzMsmldKEe75OEd4LL4d/l3/4pJvid0iKPVLzKagUtSpTx60aUiVlUFCWWS9b2oJm0rF7S4igrtoQlm5XlTwhZwWckr1IvqR5lIpk/bRrSukAcowA97HLE2dUNFUIvDfg6/T6Ux1mkKo3LM6asvN1ftG1jMZFtNMkpKOWto1/YUqEdCvzjFi03sFobBridK74JeNS3LMV0hhwekhJTA6w2stjq4sqPvKmqzlfezj8JKvE/bKQLfChb2e9QsCUM4DhCoJb+i22aqDFU/arYc4sOo3U4=
+  file:
+    - book.epub
+    - book.mobi
+    - book.pdf
+  "on":
+    repo: GITenberg/Remarks-of-Mr.-Calhoun-of-South-Carolina-on-the-bill-to-prevent-the-interference-of-certain-fed__740
+addons:
+  apt:
+    packages:
+    - xsltproc
+    - xvfb
+    - calibre
+    - python-pip
+    - git
+    - python-dev
+    - libjpeg-dev
+    - libpng-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-lxml
+    - libxml2-dev
+    - libxslt1-dev
+    - tidy
