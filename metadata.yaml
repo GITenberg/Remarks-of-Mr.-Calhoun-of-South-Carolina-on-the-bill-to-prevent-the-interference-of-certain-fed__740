@@ -1,6 +1,9 @@
 _repo: Remarks-of-Mr.-Calhoun-of-South-Carolina-on-the-bill-to-prevent-the-interference-of-certain-fed__740
-_version: 0.1.0
+_version: 0.2.0
 alternative_title: On Nullification and the Force Bill
+covers:
+- cover_type: generated
+  image_path: cover.png
 creator:
   author:
     agent_name: Calhoun, John C. (John Caldwell)
@@ -11,6 +14,8 @@ creator:
     url: http://www.gutenberg.org/2009/agents/377
     wikipedia: http://en.wikipedia.org/wiki/John_C._Calhoun
 description: ''
+edition_identifiers:
+  edition_id: http://www.gutenberg.org/ebooks/740#Remarks-of-Mr.-Calhoun-of-South-Carolina-on-the-bill-to-prevent-the-interference-of-certain-fed_
 gutenberg_issued: '1996-12-01'
 gutenberg_type: Text
 identifiers:
